@@ -22,9 +22,8 @@ public class VerificationCodeController {
     @GetMapping("/verification-code")
     public ResponseResult verificationCode(@Validated @RequestBody VerificationCodeDTO verificationCodeDTO){
         String passengerPhone = verificationCodeDTO.getPassengerPhone();
-        System.out.println("接收到的手机号参数为：" + passengerPhone);
-        String result = verificationCodeService.generatorCode(passengerPhone);
-        return ResponseResult.success(result);
+        return  verificationCodeService.generatorCode(passengerPhone);
+
     }
 
 }

@@ -21,6 +21,15 @@ public class ResponseResult<T> {
     /**
      * @Author: Windok
      * @Description: 成功响应的方法
+     * @return ResponseResult
+     **/
+    public static <T> ResponseResult success() {
+        return new ResponseResult().setCode(CommonStatuseEnum.SUCCESS.getCode()).setMessage(CommonStatuseEnum.SUCCESS.getValue());
+    }
+
+    /**
+     * @Author: Windok
+     * @Description: 成功响应的方法
      * @param data
      * @return ResponseResult
      **/
