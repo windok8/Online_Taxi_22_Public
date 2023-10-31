@@ -2,6 +2,7 @@ package com.wdk.apipassenger.service;
 
 import com.wdk.apipassenger.remote.ServiceVerificationcodeClient;
 import com.wdk.internalcommon.dto.ResponseResult;
+import com.wdk.internalcommon.dto.TokenResponse;
 import com.wdk.internalcommon.response.NumberCodeResponse;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,4 +44,29 @@ public class VerificationCodeService {
         return ResponseResult.success();
     }
 
+    /**
+     * @Author: Windok
+     * @Description:    校验验证码
+     * @param passengerPhone    手机号
+     * @param verificationCode  验证码
+     * @return ResponseResult
+     **/
+    public ResponseResult checkCode(String passengerPhone,String verificationCode) {
+        //  根据手机号从 Redis 中取出验证码
+        System.out.println("根据手机号从 Redis 中取出验证码");
+
+        //  校验验证码
+        System.out.println("校验验证码");
+
+        //  判断用户是否存在，如果存在，直接返回用户信息，如果不存在，先注册，后返回用户信息
+        System.out.println("判断用户是否存在，如果存在，直接返回用户信息，如果不存在，先注册，后返回用户信息");
+
+        //  颁发 token
+        System.out.println("颁发 token");
+
+        //  响应
+        TokenResponse tokenResponse = new TokenResponse();
+        tokenResponse.setToken("token value");
+        return ResponseResult.success(tokenResponse);
+    }
 }
