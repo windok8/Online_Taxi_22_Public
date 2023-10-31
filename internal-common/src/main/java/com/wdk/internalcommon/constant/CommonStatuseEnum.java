@@ -8,6 +8,8 @@ package com.wdk.internalcommon.constant;
  */
 public enum CommonStatuseEnum {
 
+    //  验证码错误
+    VERIFICATION_CODE_ERROR(1099, "验证码不正确"),
     //  成功
     SUCCESS(1, "success"),
     //  失败

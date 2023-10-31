@@ -29,6 +29,8 @@ public class VerificationCodeController {
     public ResponseResult checkVerificationCode(@RequestBody VerificationCodeDTO verificationCodeDTO){
 
         String passengerPhone = verificationCodeDTO.getPassengerPhone();
+        //  getVerificationCode() 为什么不是 getVerificationCodeDTO() ？
+        //  因为前端传过来的是一个对象，对象里面有两个属性，一个是手机号，一个是验证码
         String verificationCode = verificationCodeDTO.getVerificationCode();
         System.out.println("passengerPhone = " + passengerPhone);
         System.out.println("verificationCode = " + verificationCode);
