@@ -1,4 +1,4 @@
-package com.wdk.apipassenger.request;
+package com.wdk.internalcommon.request;
 
 import lombok.Data;
 

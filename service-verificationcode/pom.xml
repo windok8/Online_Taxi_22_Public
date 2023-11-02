@@ -16,6 +16,7 @@
 		<java.version>8</java.version>
 	</properties>
 	<dependencies>
+
 		<dependency>
 			<groupId>com.wdk</groupId>
 			<artifactId>internal-common</artifactId>

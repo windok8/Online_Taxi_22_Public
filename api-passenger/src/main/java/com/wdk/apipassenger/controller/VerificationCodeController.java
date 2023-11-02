@@ -1,10 +1,9 @@
 package com.wdk.apipassenger.controller;
 
-import com.wdk.apipassenger.request.VerificationCodeDTO;
+import com.wdk.internalcommon.request.VerificationCodeDTO;
 import com.wdk.apipassenger.service.VerificationCodeService;
 import com.wdk.internalcommon.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**

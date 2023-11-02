@@ -17,6 +17,7 @@
     <modules>
         <module>api-passenger</module>
         <module>internal-common</module>
+        <module>service-passenger-user</module>
     </modules>
 
     <properties>
@@ -39,6 +40,13 @@
             <version>1.18.24</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.wdk</groupId>
+            <artifactId>internal-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
 
     </dependencies>
 
