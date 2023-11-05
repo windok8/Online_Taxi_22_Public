@@ -1,10 +1,12 @@
 package com.wdk.apipassenger.service;
 
 import com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
+import com.wdk.apipassenger.remote.ServicePassengerUserClient;
 import com.wdk.apipassenger.remote.ServiceVerificationcodeClient;
 import com.wdk.internalcommon.constant.CommonStatuseEnum;
 import com.wdk.internalcommon.dto.ResponseResult;
 import com.wdk.internalcommon.dto.TokenResponse;
+import com.wdk.internalcommon.request.VerificationCodeDTO;
 import com.wdk.internalcommon.response.NumberCodeResponse;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
@@ -25,6 +27,8 @@ public class VerificationCodeService {
 
     @Autowired
     private ServiceVerificationcodeClient serviceVerificationcodeClient;
+    @Autowired
+    private ServicePassengerUserClient servicePassengerUserClient;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -82,7 +86,9 @@ public class VerificationCodeService {
             return ResponseResult.fail(CommonStatuseEnum.VERIFICATION_CODE_ERROR.getCode(),CommonStatuseEnum.VERIFICATION_CODE_ERROR.getValue());
         }
         //  判断用户是否存在，如果存在，直接返回用户信息，如果不存在，先注册，后返回用户信息
-        System.out.println("判断用户是否存在，如果存在，直接返回用户信息，如果不存在，先注册，后返回用户信息");
+        VerificationCodeDTO verificationCodeDTO = new VerificationCodeDTO();
+        verificationCodeDTO.setPassengerPhone(passengerPhone);
+        servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
 
         //  颁发 token
         System.out.println("颁发 token");
