@@ -13,6 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @version: 1.0
  */
 @SpringBootApplication
+@EnableFeignClients // 开启feign
 @MapperScan("com.wdk.servicepassengeruser.mapper")
 public class ServicePaaengerUserApplication {
 
