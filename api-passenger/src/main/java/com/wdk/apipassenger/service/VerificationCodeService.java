@@ -4,10 +4,12 @@ import com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.internal.Stri
 import com.wdk.apipassenger.remote.ServicePassengerUserClient;
 import com.wdk.apipassenger.remote.ServiceVerificationcodeClient;
 import com.wdk.internalcommon.constant.CommonStatuseEnum;
+import com.wdk.internalcommon.constant.IdentityConstants;
 import com.wdk.internalcommon.dto.ResponseResult;
 import com.wdk.internalcommon.dto.TokenResponse;
 import com.wdk.internalcommon.request.VerificationCodeDTO;
 import com.wdk.internalcommon.response.NumberCodeResponse;
+import com.wdk.internalcommon.util.JwtUtils;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,10 +94,10 @@ public class VerificationCodeService {
 
         //  颁发 token
         System.out.println("颁发 token");
-
+        String token = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY,"!@#$%^&*()");
         //  响应
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setToken("token value");
+        tokenResponse.setToken(token);
         return ResponseResult.success(tokenResponse);
     }
 }
