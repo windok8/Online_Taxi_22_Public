@@ -35,7 +35,10 @@ public class VerificationCodeService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    //  验证码前缀
     private String verificationCodePrefix = "passenger-verification-code-";
+    //  token 前缀
+    private String tokenPrefix = "token-";
 
     public ResponseResult generatorCode(String passengerPhone) {
         //  调用验证码服务生成验证码
@@ -47,7 +50,7 @@ public class VerificationCodeService {
         //  key, value, 过期时间
         String key = createKeyByPhone(passengerPhone);
         //  存入 Redis
-        stringRedisTemplate.opsForValue().set(key, numberCode+ "", 2, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(key, numberCode + "", 2, TimeUnit.MINUTES);
 
         // 通过短信服务商，将对应的验证码发送到对应的手机上，阿里短信服务，腾讯短信服务，华信短信服务，容联云通讯
 
@@ -55,24 +58,34 @@ public class VerificationCodeService {
     }
 
     /**
-     * @Author: Windok
-     * @Description:    根据手机号生成 key
-     * @param passengerPhone  手机号
+     * @param passengerPhone 手机号
      * @return String
+     * @Author: Windok
+     * @Description: 根据手机号生成 key
      **/
     private String createKeyByPhone(String passengerPhone) {
         return verificationCodePrefix + passengerPhone;
     }
 
-
     /**
      * @Author: Windok
-     * @Description:    校验验证码
-     * @param passengerPhone    手机号
-     * @param verificationCode  验证码
-     * @return ResponseResult
+     * @Description: 根据手机号和身份生成 token 的 key
+     * @param phone
+     * @param identity
+     * @return String
      **/
-    public ResponseResult checkCode(String passengerPhone,String verificationCode) {
+    private String generatorTokenKey(String phone, String identity) {
+        return tokenPrefix + phone + "-" + identity;
+    }
+
+    /**
+     * @param passengerPhone   手机号
+     * @param verificationCode 验证码
+     * @return ResponseResult
+     * @Author: Windok
+     * @Description: 校验验证码
+     **/
+    public ResponseResult checkCode(String passengerPhone, String verificationCode) {
         //  根据手机号从 Redis 中取出验证码
         //  生成 key
         String key = createKeyByPhone(passengerPhone);
@@ -81,11 +94,11 @@ public class VerificationCodeService {
         System.out.println("codeRedis = " + codeRedis);
         //  校验验证码
         System.out.println("校验验证码");
-        if(StringUtils.isBlank(codeRedis)){
-            return ResponseResult.fail(CommonStatuseEnum.VERIFICATION_CODE_ERROR.getCode(),CommonStatuseEnum.VERIFICATION_CODE_ERROR.getValue());
+        if (StringUtils.isBlank(codeRedis)) {
+            return ResponseResult.fail(CommonStatuseEnum.VERIFICATION_CODE_ERROR.getCode(), CommonStatuseEnum.VERIFICATION_CODE_ERROR.getValue());
         }
-        if(!verificationCode.trim().equals(codeRedis.trim())){
-            return ResponseResult.fail(CommonStatuseEnum.VERIFICATION_CODE_ERROR.getCode(),CommonStatuseEnum.VERIFICATION_CODE_ERROR.getValue());
+        if (!verificationCode.trim().equals(codeRedis.trim())) {
+            return ResponseResult.fail(CommonStatuseEnum.VERIFICATION_CODE_ERROR.getCode(), CommonStatuseEnum.VERIFICATION_CODE_ERROR.getValue());
         }
         //  判断用户是否存在，如果存在，直接返回用户信息，如果不存在，先注册，后返回用户信息
         VerificationCodeDTO verificationCodeDTO = new VerificationCodeDTO();
@@ -93,8 +106,11 @@ public class VerificationCodeService {
         servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
 
         //  颁发 token
-        System.out.println("颁发 token");
-        String token = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY,"!@#$%^&*()");
+
+        String token = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, "!@#$%^&*()");
+        //  将 Token 存入 Redis
+        String tokenKey = generatorTokenKey(passengerPhone, IdentityConstants.PASSENGER_IDENTITY);
+        stringRedisTemplate.opsForValue().set(tokenKey,token,30,TimeUnit.DAYS);
         //  响应
         TokenResponse tokenResponse = new TokenResponse();
         tokenResponse.setToken(token);
