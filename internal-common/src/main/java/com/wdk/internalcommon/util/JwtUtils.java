@@ -35,7 +35,7 @@ public class JwtUtils {
 
     //  生成 Token
     // 生成token
-    public static String generatorToken(String phone , String identity , String tokenType) {
+    public static String generatorToken(String phone , String identity, String tokenType){
         Map<String,String> map = new HashMap<>();
         map.put(JWT_KEY_PHONE,phone);
         map.put(JWT_KEY_IDENTITY, identity);
@@ -43,6 +43,10 @@ public class JwtUtils {
         // 防止每次生成的token一样。
         map.put(JWT_TOKEN_TIME, Calendar.getInstance().getTime().toString());
 
+        //  设置过期时间
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+        Date date = calendar.getTime();
         JWTCreator.Builder builder = JWT.create();
         // 整合map
         map.forEach(
