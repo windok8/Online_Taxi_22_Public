@@ -51,7 +51,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             //  从 Reids 中获取 token
             String tokenRedis = stringRedisTemplate.opsForValue().get(tokenKey);
             if ((StringUtils.isBlank(tokenRedis))||(!token.trim().equals(tokenRedis.trim()))) {
-                resultString = "Token invalid ";
+                resultString = "Access Token invalid ";
                 result = false;
             }
         }

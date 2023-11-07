@@ -44,9 +44,8 @@ public class JwtUtils {
         map.put(JWT_TOKEN_TIME, Calendar.getInstance().getTime().toString());
 
         //  设置过期时间
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 1);
-        Date date = calendar.getTime();
+        map.put(JWT_TOKEN_TIME, Calendar.getInstance().getTime().toString());
+
         JWTCreator.Builder builder = JWT.create();
         // 整合map
         map.forEach(
