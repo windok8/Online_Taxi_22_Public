@@ -36,26 +36,8 @@ public class JwtInterceptor implements HandlerInterceptor {
         String resultString = "";
         String token = request.getHeader("Authorization");
         //  解析 Token
-        TokenResult tokenResult = null;
-        try {
-            tokenResult = JwtUtils.parseToken(token);
-        } catch (SignatureVerificationException e) {
-            //  token签名错误
-            resultString = "Token sign error ";
-            result = false;
-        } catch (TokenExpiredException e) {
-            //  token过期
-            resultString = "Token time out ";
-            result = false;
-        } catch (AlgorithmMismatchException e) {
-            //  算法不匹配异常
-            resultString = "Token AlgorithmMismatchException ";
-            result = false;
-        } catch (Exception e) {
-            //  token无效
-            resultString = "Token invalid ";
-            result = false;
-        }
+        TokenResult tokenResult = JwtUtils.checkToken(token);
+
 
         if (tokenResult == null) {
             resultString = "Token invalid ";
@@ -68,15 +50,9 @@ public class JwtInterceptor implements HandlerInterceptor {
             String tokenKey = RedisPrefixUtils.generatorTokenKey(phone, identity, TokenConstants.ACCESS_TOKEN_TYPE);
             //  从 Reids 中获取 token
             String tokenRedis = stringRedisTemplate.opsForValue().get(tokenKey);
-            if (StringUtils.isBlank(tokenRedis)) {
+            if ((StringUtils.isBlank(tokenRedis))||(!token.trim().equals(tokenRedis.trim()))) {
                 resultString = "Token invalid ";
                 result = false;
-            }else {
-                //  判断 token 是否一致
-                if (!token.trim().equals(tokenRedis.trim())){
-                    resultString = "Token invalid ";
-                    result = false;
-                }
             }
         }
 
