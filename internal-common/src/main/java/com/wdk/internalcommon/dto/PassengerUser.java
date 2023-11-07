@@ -1,4 +1,4 @@
-package com.wdk.servicepassengeruser.dto;
+package com.wdk.internalcommon.dto;
 
 import lombok.Data;
 
@@ -6,12 +6,13 @@ import java.time.LocalDateTime;
 
 /**
  * @author : Windok
- * @date: 2023-11-02
+ * @date: 2023-11-07
  * @Description:
  * @version: 1.0
  */
 @Data
 public class PassengerUser {
+
 
     private Long id;
     private LocalDateTime gmtCreate;
@@ -20,5 +21,6 @@ public class PassengerUser {
     private String passengerName;
     private Byte passengerGender;
     private Byte state;
+    private String profilePhoto;
 
 }
