@@ -2,6 +2,8 @@ package com.wdk.apipassenger.service;
 
 import com.wdk.internalcommon.dto.PassengerUser;
 import com.wdk.internalcommon.dto.ResponseResult;
+import com.wdk.internalcommon.dto.TokenResult;
+import com.wdk.internalcommon.util.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,13 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     public ResponseResult getUserByAccessToken(String accessToken) {
-        log.info("accessToken: ", accessToken);
+        log.info("accessToken: " + accessToken);
         //  解析 accessToken 取得手机号
-
+        TokenResult tokenResult = JwtUtils.checkToken(accessToken);
+        String phone = tokenResult.getPhone();
+        log.info("phone: " + phone);
         //  根据手机号查询用户信息
+
         PassengerUser passengerUser = new PassengerUser();
         passengerUser.setPassengerName("张三");
         passengerUser.setProfilePhoto("头像");

@@ -1,5 +1,7 @@
 package com.wdk.servicepassengeruser.service;
 
+import com.wdk.internalcommon.constant.CommonStatuseEnum;
+import com.wdk.internalcommon.dto.PassengerUser;
 import com.wdk.internalcommon.dto.ResponseResult;
 import com.wdk.servicepassengeruser.mapper.PassengerUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,24 @@ public class UserService {
         }
         //  如果不存在，插入用户信息
         return ResponseResult.success();
+    }
+
+    /**
+     * @Author: Windok
+     * @Description:    根据手机号查询用户信息
+     * @param passengerPhoen
+     * @return ResponseResult
+     **/
+    public ResponseResult getUserByPhone(String passengerPhoen) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("passenger_phone", passengerPhoen);
+        List<PassengerUser> passengerUsers = passengerUserMapper.selectByMap(map);
+        if(passengerUsers.size() == 0){
+            return ResponseResult.fail(CommonStatuseEnum.USER_NOT_EXIST.getCode(), CommonStatuseEnum.USER_NOT_EXIST.getValue());
+        }else {
+            PassengerUser passengerUser = passengerUsers.get(0);
+            return ResponseResult.success(passengerUser);
+        }
     }
 
 }
