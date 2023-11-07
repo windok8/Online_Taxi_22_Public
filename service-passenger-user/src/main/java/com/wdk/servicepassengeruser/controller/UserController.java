@@ -4,10 +4,7 @@ import com.wdk.internalcommon.dto.ResponseResult;
 import com.wdk.internalcommon.request.VerificationCodeDTO;
 import com.wdk.servicepassengeruser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author : Windok
@@ -29,9 +26,10 @@ public class UserController {
         return userService.loginOrRegister(passengerPhoen);
     }
 
-    @GetMapping("/user/")
-    public ResponseResult getUser(@RequestBody VerificationCodeDTO verificationCodeDTO) {
-        String passengerPhoen = verificationCodeDTO.getPassengerPhone();
+    @GetMapping("/user/{phone}")
+    public ResponseResult getUser(@PathVariable("phone") String passengerPhoen) {
+
+        System.out.println("service-passenger-user passengerPhoen = " + passengerPhoen);
         return userService.getUserByPhone(passengerPhoen);
     }
 
