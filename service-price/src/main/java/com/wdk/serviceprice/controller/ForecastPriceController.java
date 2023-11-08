@@ -29,6 +29,7 @@ public class ForecastPriceController {
         String depLongitude = forecastPriceDTO.getDepLongitude();
         String destLatitude = forecastPriceDTO.getDestLatitude();
         String destLongitude = forecastPriceDTO.getDestLongitude();
+        log.info("预估价格请求参数：depLatitude={}, depLongitude={}, destLatitude={}, destLongitude={}", depLatitude, depLongitude, destLatitude, destLongitude);
 
         return forecastPriceService.forecastPrice(depLatitude, depLongitude, destLatitude, destLongitude);
     }
