@@ -95,7 +95,7 @@ public class DicDistrictService {
         dicDistrict.setAddressName(addressName);
         dicDistrict.setParentAddressCode(parentAddressCode);
         dicDistrict.setLevel(generateLevel(level));
-        dicDistrictMapper.insert(dicDistrict);
+        //dicDistrictMapper.insert(dicDistrict);
     }
 
     public int generateLevel(String level) {

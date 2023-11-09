@@ -1,24 +1,24 @@
-package com.wdk.servicepassengeruser;
+package com.wdk.servicedriveruser;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author : Windok
- * @date: 2023-10-31
+ * @date: 2023-11-09
  * @Description:
  * @version: 1.0
  */
 @SpringBootApplication
-@EnableFeignClients // 开启feign
-@MapperScan("com.wdk.servicepassengeruser.mapper")
-public class ServicePaaengerUserApplication {
+@EnableDiscoveryClient
+@MapperScan("com.wdk.servicedriveruser.mapper")
+public class ServiceDriverUserApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ServicePaaengerUserApplication.class);
+        SpringApplication.run(ServiceDriverUserApplication.class);
     }
 
 }
