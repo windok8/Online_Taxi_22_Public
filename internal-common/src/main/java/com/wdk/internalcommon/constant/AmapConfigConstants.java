@@ -17,6 +17,13 @@ public class AmapConfigConstants {
 
     /**
      * @Author: Windok
+     * @Description:   行政区域查询地址
+     * @param null
+     **/
+    public static final String DISTRICT_URL = "https://restapi.amap.com/v3/config/district";
+
+    /**
+     * @Author: Windok
      * @Description:    路径规划 Json key 值
      * @param null
      **/

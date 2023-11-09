@@ -13,4 +13,5 @@ public class ForecastPriceResponse {
 
     private double price;
 
+
 }

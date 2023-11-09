@@ -16,4 +16,7 @@ public class ForecastPriceDTO {
     private String destLongitude;
     private String destLatitude;
 
+    private String cityCode;
+    private String vehicleType;
+
 }
