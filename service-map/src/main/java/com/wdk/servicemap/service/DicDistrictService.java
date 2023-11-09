@@ -2,6 +2,8 @@ package com.wdk.servicemap.service;
 
 import com.wdk.internalcommon.constant.AmapConfigConstants;
 import com.wdk.internalcommon.dto.ResponseResult;
+import com.wdk.servicemap.remote.MapDicDistrictClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,26 +16,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class DicDistrictService {
 
-    @Value("${amap.key}")
-    private String amapKey;
+    @Autowired
+    private MapDicDistrictClient mapDicDistrictClient;
 
     public ResponseResult initDicDistrict(String keywords) {
 
-        //  https://restapi.amap.com/v3/config/district?
-        //  keywords=北京&subdistrict=2&key=<用户的key>
+        //  请求地图
+        String dicDistrict = mapDicDistrictClient.dicDistrict(keywords);
+        System.out.println(dicDistrict);
 
-        //  拼装 请求的url
-
-        StringBuilder url = new StringBuilder();
-        url.append(AmapConfigConstants.DISTRICT_URL);
-        url.append("?keywords=" + keywords);
-        url.append("&subdistrict=3");
-        url.append("&key=" + amapKey);
-
-        //  解析结果
-        //  插入数据库
 
         return ResponseResult.success("");
     }
+
+
 
 }
