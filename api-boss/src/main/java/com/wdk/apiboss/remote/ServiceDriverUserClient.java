@@ -1,10 +1,10 @@
 package com.wdk.apiboss.remote;
 
+import com.wdk.internalcommon.dto.Car;
+import com.wdk.internalcommon.dto.DriverCarBindingRelationship;
 import com.wdk.internalcommon.dto.DriverUser;
 import com.wdk.internalcommon.dto.ResponseResult;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +34,15 @@ public interface ServiceDriverUserClient {
      **/
     @RequestMapping(method = RequestMethod.PUT,value = "/user")
     public ResponseResult updateDriverUser(DriverUser driverUser);
+
+    @RequestMapping(method = RequestMethod.POST,value = "/bind")
+    public ResponseResult bind(@RequestBody DriverCarBindingRelationship driverCarBindingRelationship);
+
+    @RequestMapping(method = RequestMethod.PUT,value = "/unbind")
+    public ResponseResult unbind(@RequestBody DriverCarBindingRelationship driverCarBindingRelationship);
+
+    @RequestMapping(method = RequestMethod.POST,value = "/car")
+    public ResponseResult addcar(@RequestBody Car car);
 
 
 }

@@ -14,10 +14,6 @@ import java.util.Collections;
  * @version: 1.0
  */
 public class MysqlGenerator {
-
-
-
-
     public static void main(String[] args) {
 
 
@@ -34,7 +30,7 @@ public class MysqlGenerator {
 
                         }
                 ).strategyConfig(builder -> {
-                    builder.addInclude("car");
+                    builder.addInclude("driver_car_binding_relationship");
                 }).templateEngine(new FreemarkerTemplateEngine())
                 .execute();
     }
